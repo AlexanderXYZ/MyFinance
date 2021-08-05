@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/day_menu"
+        android:title="@string/day_title_menu"/>
+    <item
+        android:id="@+id/weak_menu"
+        android:title="@string/weak_title_menu" />
+    <item
+        android:id="@+id/month_menu"
+        android:title="@string/month_title_menu" />
+    <item
+        android:id="@+id/year_menu"
+        android:title="@string/year_title_menu"/>
+    <item
+        android:id="@+id/all_time_menu"
+        android:title="@string/all_time_title_menu" />
+</menu>

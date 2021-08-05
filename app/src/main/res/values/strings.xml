@@ -1,3 +1,50 @@
 <resources>
+    <!-- Default -->
     <string name="app_name">My Finance</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Logging -->
+    <string name="registration_logging_name">Registration</string>
+    <string name="my_account_logging_name">My Account</string>
+    <!--Logging Hint-->
+    <string name="email_default_hint">Email</string>
+    <string name="password_default_hint">Password</string>
+    <string name="repeat_password_default_hint">Repeat password</string>
+    <!--  -->
+
+
+    <!-- Main -->
+    <!--  -->
+
+
+    <!-- Graphs -->
+    <!--  -->
+
+
+    <!-- Operations -->
+    <!--  -->
+
+
+    <!-- Settings -->
+    <!--  -->
+
+
+    <!-- Menu -->
+    <!-- Menu navigation -->
+    <string name="home_title_menu">Home</string>
+    <string name="operations_title_menu">Operations</string>
+    <string name="graphs_title_menu">Graphs</string>
+    <string name="categories_title_menu">Categories</string>
+
+    <!-- Menu Balance -->
+    <string name="income_title_menu">Income</string>
+    <string name="expenses_title_menu">Expenses</string>
+
+    <!-- Menu Period graphs main -->
+    <string name="day_title_menu">Day</string>
+    <string name="weak_title_menu">Weak</string>
+    <string name="month_title_menu">Month</string>
+    <string name="year_title_menu">Year</string>
+    <string name="all_time_title_menu">All time</string>
+    <!--  -->
 </resources>

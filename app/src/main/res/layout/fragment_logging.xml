@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_blue"
+    tools:context=".ui.loggin.LoggingFragment">
+
+    <TextView
+        android:id="@+id/myAccount_textView"
+        style="@style/title_logging"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/my_account_logging_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/logging_constraitLayout"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/background_inputs_logging"
+            android:gravity="center|top"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/login_editText"
+                style="@style/logging_editText"
+                android:layout_marginTop="42dp"
+                android:drawableStart="@drawable/ic_email_24"
+                android:hint="@string/email_default_hint"
+                android:inputType="textEmailAddress" />
+
+            <EditText
+                android:id="@+id/password_editText"
+                style="@style/logging_editText"
+                android:drawableStart="@drawable/ic_password_24"
+                android:hint="@string/password_default_hint"
+                android:inputType="textPassword" />
+
+            <TextView
+                android:id="@+id/forgotPassword_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Forgot password?"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/signIn_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="6dp"
+                android:text="Sign In"
+                android:textAllCaps="false" />
+
+            <TextView
+                android:id="@+id/signUp_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sign Up" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/profile_imageView"
+            style="@style/image_into_logging"
+            android:src="@drawable/profile"
+            app:layout_anchor="@id/logging_constraitLayout"
+            app:layout_anchorGravity="center|top" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

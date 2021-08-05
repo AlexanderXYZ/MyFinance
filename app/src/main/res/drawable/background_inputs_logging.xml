@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Bottom Triangle -->
+
+    <item>
+        <shape>
+            <solid android:color="@color/white" />
+            <corners android:radius="12dp" />
+        </shape>
+    </item>
+    <item android:gravity="center_horizontal|top">
+        <shape>
+            <size
+                android:width="100dp"
+                android:height="50dp" />
+            <corners
+                android:bottomLeftRadius="110dp"
+                android:bottomRightRadius="110dp" />
+
+            <solid android:color="@color/dark_blue" />
+        </shape>
+    </item>
+
+
+</layer-list>
