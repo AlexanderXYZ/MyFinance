@@ -10,6 +10,7 @@
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/drawable/transparent_circle.xml" value="0.5615384615384615" />
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/layout/action_bar_layout.xml" value="0.5541666666666667" />
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/layout/activity_main.xml" value="0.4773550724637681" />
+        <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/layout/activity_splash_screen.xml" value="0.5541666666666667" />
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/layout/fragment_add_operation.xml" value="0.5541666666666667" />
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/layout/fragment_categories.xml" value="0.5541666666666667" />
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/layout/fragment_graphs.xml" value="0.5541666666666667" />
@@ -21,9 +22,11 @@
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/layout/fragment_settings.xml" value="0.5541666666666667" />
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/layout/fragment_sign_in.xml" value="0.5541666666666667" />
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/layout/main_graph_item.xml" value="0.5541666666666667" />
+        <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/layout/splash_screen.xml" value="0.5541666666666667" />
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/menu/bottom_nav_menu.xml" value="0.5541666666666667" />
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/menu/main_balance_menu.xml" value="0.5541666666666667" />
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/menu/main_graph_date_menu.xml" value="0.5541666666666667" />
+        <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.346875" />
       </map>
     </option>
   </component>
