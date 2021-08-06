@@ -10,11 +10,13 @@
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/drawable/transparent_circle.xml" value="0.5615384615384615" />
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/layout/action_bar_layout.xml" value="0.5541666666666667" />
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/layout/activity_main.xml" value="0.4773550724637681" />
+        <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/layout/fragment_add_operation.xml" value="0.5541666666666667" />
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/layout/fragment_categories.xml" value="0.5541666666666667" />
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/layout/fragment_graphs.xml" value="0.5541666666666667" />
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/layout/fragment_logging.xml" value="0.5541666666666667" />
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/layout/fragment_main.xml" value="0.5541666666666667" />
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/layout/fragment_operation.xml" value="0.5541666666666667" />
+        <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/layout/fragment_operations.xml" value="0.5541666666666667" />
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/layout/fragment_registration.xml" value="0.5541666666666667" />
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/layout/fragment_settings.xml" value="0.5541666666666667" />
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/layout/fragment_sign_in.xml" value="0.5541666666666667" />

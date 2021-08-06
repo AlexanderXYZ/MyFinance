@@ -46,5 +46,9 @@
     <string name="month_title_menu">Month</string>
     <string name="year_title_menu">Year</string>
     <string name="all_time_title_menu">All time</string>
+    <string name="input_money_default_hint">0</string>
+    <string name="currency_default_name">RUB</string>
+    <string name="account_default_name">Account</string>
+    <string name="categories_default_name">Categories</string>
     <!--  -->
 </resources>

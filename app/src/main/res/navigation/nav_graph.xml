@@ -20,11 +20,14 @@
             android:id="@+id/action_mainFragment_to_categoriesFragment"
             app:destination="@id/categoriesFragment" />
         <action
-            android:id="@+id/action_mainFragment_to_operationFragment"
-            app:destination="@id/operationFragment" />
-        <action
             android:id="@+id/action_mainFragment_to_loggingFragment"
             app:destination="@id/loggingFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_operationsFragment"
+            app:destination="@id/operationsFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_addOperationFragment"
+            app:destination="@id/addOperationFragment" />
     </fragment>
     <fragment
         android:id="@+id/categoriesFragment"
@@ -78,15 +81,6 @@
             app:destination="@id/mainFragment" />
     </fragment>
     <fragment
-        android:id="@+id/operationFragment"
-        android:name="com.buslaev.myfinance.ui.operation.OperationFragment"
-        android:label="fragment_operation"
-        tools:layout="@layout/fragment_operation" >
-        <action
-            android:id="@+id/action_operationFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/forgotPasswordFragment"
         android:name="com.buslaev.myfinance.ui.forgotPassword.ForgotPasswordFragment"
         android:label="fragment_forgot_password"
@@ -94,5 +88,22 @@
         <action
             android:id="@+id/action_forgotPasswordFragment_to_loggingFragment"
             app:destination="@id/loggingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addOperationFragment"
+        android:name="com.buslaev.myfinance.ui.addOperation.AddOperationFragment"
+        android:label="fragment_add_operation"
+        tools:layout="@layout/fragment_add_operation" />
+    <fragment
+        android:id="@+id/operationsFragment"
+        android:name="com.buslaev.myfinance.ui.operations.OperationsFragment"
+        android:label="fragment_operations"
+        tools:layout="@layout/fragment_operations" >
+        <action
+            android:id="@+id/action_operationsFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_operationsFragment_to_addOperationFragment"
+            app:destination="@id/addOperationFragment" />
     </fragment>
 </navigation>
