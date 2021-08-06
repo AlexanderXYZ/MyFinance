@@ -10,9 +10,8 @@ interface FinanceDao {
     @Query("SELECT * FROM operations")
     fun getOperations(): LiveData<List<Operation>>
 
-    //@Query("SELECT id,title,SUM(value),icon,account,dateTime FROM operations GROUP BY title")
-    @Query("SELECT * FROM operations")
-    fun getTotalOperationsByPeriod(): LiveData<List<Operation>>
+    @Query("SELECT title,SUM(value) as value,icon,account,dateTime FROM operations WHERE dateTime BETWEEN :startDate AND :endDate GROUP BY title")
+    fun getTotalOperationsByPeriod(startDate: String, endDate: String): LiveData<List<Operation>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(operation: Operation)

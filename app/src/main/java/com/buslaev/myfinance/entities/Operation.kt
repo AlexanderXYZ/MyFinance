@@ -8,9 +8,9 @@ import androidx.room.PrimaryKey
 data class Operation(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    var id: Int = 0,
+    var id: Int? = null,
     @ColumnInfo(name = "title") var title: String = "",
-    @ColumnInfo(name = "value") var value: Double = 0.0,
+    @ColumnInfo(name = "value") var value: Double? = null,
     @ColumnInfo(name = "icon") var icon: Int? = null,
     @ColumnInfo(name = "account") var account: String = "",
     @ColumnInfo(name = "dateTime") var dateTime: String = ""
