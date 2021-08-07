@@ -7,11 +7,8 @@ import com.buslaev.myfinance.entities.Operation
 @Dao
 interface FinanceDao {
 
-    @Query("SELECT * FROM operations")
-    fun getOperations(): LiveData<List<Operation>>
-
     @Query("SELECT title,SUM(value) as value,icon,account,dateTime,balance FROM operations WHERE balance = :balance AND dateTime BETWEEN :startDate AND :endDate GROUP BY title")
-    fun getTotalOperationsByPeriod(
+    fun getOperationsByPeriod(
         startDate: String,
         endDate: String,
         balance: String

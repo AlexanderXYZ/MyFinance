@@ -5,8 +5,6 @@ import androidx.room.Room
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.buslaev.myfinance.adapters.MainAdapter
-import com.buslaev.myfinance.db.room.DaoHelper
-import com.buslaev.myfinance.db.room.DaoHelperIml
 import com.buslaev.myfinance.db.room.FinanceDao
 import com.buslaev.myfinance.db.room.FinanceDatabase
 import com.buslaev.myfinance.other.Constants.DATABASE_NAME
@@ -30,10 +28,6 @@ object AppModule {
     @Provides
     @Singleton
     fun provideDao(database: FinanceDatabase): FinanceDao = database.getDao()
-
-    @Provides
-    @Singleton
-    fun provideDaoHelper(daoHelperIml: DaoHelperIml): DaoHelper = daoHelperIml
 
     @Provides
     @Singleton

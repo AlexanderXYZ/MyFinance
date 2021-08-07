@@ -48,8 +48,8 @@ class MainAdapter @Inject constructor(
         return mList.size
     }
 
-    fun setList(list: List<Operation>, allMoney: Double) {
-        mAllMoney = allMoney
+    fun setList(list: List<Operation>) {
+        mAllMoney = list.sumOf { it.value }
         mList = list
         notifyDataSetChanged()
     }

@@ -3,16 +3,17 @@ package com.buslaev.myfinance.ui.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.buslaev.myfinance.db.room.DaoHelper
 import com.buslaev.myfinance.entities.Operation
-import com.buslaev.myfinance.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val repository: Repository
+    private val repository: DaoHelper
 ) : ViewModel() {
+
 
     private val calendar = Calendar.getInstance()
 

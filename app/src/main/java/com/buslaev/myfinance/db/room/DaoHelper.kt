@@ -5,8 +5,7 @@ import com.buslaev.myfinance.entities.Operation
 
 interface DaoHelper {
 
-    fun getOperations(): LiveData<List<Operation>>
-    fun getTotalOperationsByPeriod(
+    fun getOperationsByPeriod(
         startDate: String,
         endDate: String,
         balance: String

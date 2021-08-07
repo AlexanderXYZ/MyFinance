@@ -52,19 +52,23 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        APP_ACTIVITY.supportActionBar?.apply {
+        (activity as MainActivity).supportActionBar?.apply {
             displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
             setCustomView(R.layout.action_bar_layout)
         }
-        initFields()
         setupBalanceNavigation()
         setupPeriodsNavigation()
         setupRecyclerView()
     }
 
+    override fun onStart() {
+        super.onStart()
+        initFields()
+    }
+
     private fun initFields() {
-        APP_ACTIVITY.floatingActionButton.setOnClickListener {
-            APP_ACTIVITY.navController.navigate(R.id.action_mainFragment_to_addOperationFragment)
+        (activity as MainActivity).floatingActionButton.setOnClickListener {
+            (activity as MainActivity).navController.navigate(R.id.action_mainFragment_to_addOperationFragment)
         }
     }
 
@@ -116,8 +120,7 @@ class MainFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
         }
         mObserver = Observer { list ->
-            val allMoney: Double = list.sumOf { it.value }
-            mAdapter.setList(list, allMoney)
+            mAdapter.setList(list)
         }
         mViewModel.incomeOperations.observe(viewLifecycleOwner, mObserver)
     }
