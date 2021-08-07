@@ -12,9 +12,10 @@ class DaoHelperIml @Inject constructor(
 
     override fun getTotalOperationsByPeriod(
         startDate: String,
-        endDate: String
+        endDate: String,
+        balance: String
     ): LiveData<List<Operation>> =
-        dao.getTotalOperationsByPeriod(startDate, endDate)
+        dao.getTotalOperationsByPeriod(startDate, endDate, balance)
 
     override suspend fun insert(operation: Operation) {
         dao.insert(operation)

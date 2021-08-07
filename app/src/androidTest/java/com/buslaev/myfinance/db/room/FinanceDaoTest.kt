@@ -7,6 +7,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.buslaev.myfinance.entities.Operation
 import com.buslaev.myfinance.getOrAwaitValue
+import com.buslaev.myfinance.other.Constants.INCOME_BALANCE
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -43,7 +44,7 @@ class FinanceDaoTest {
 
     @Test
     fun insertOperation() = runBlockingTest {
-        val testingItem = Operation(1, "Family", 1000.0, null, "Main", "")
+        val testingItem = Operation(1, "Family", 1000.0, null, "Main", "", "")
         dao.insert(testingItem)
 
         val operations = dao.getOperations().getOrAwaitValue()
@@ -52,7 +53,7 @@ class FinanceDaoTest {
 
     @Test
     fun deleteOperation() = runBlockingTest {
-        val testingItem = Operation(1, "Family", 1000.0, null, "Main", "")
+        val testingItem = Operation(1, "Family", 1000.0, null, "Main", "", "")
         dao.insert(testingItem)
         dao.delete(testingItem)
 
@@ -63,32 +64,51 @@ class FinanceDaoTest {
     @Test
     fun getTotalOperationsByPeriod_contain() = runBlockingTest {
         setupTestingItems()
-
-        val sumOperations =
-            dao.getTotalOperationsByPeriod("2021-08-05", "2021-08-07").getOrAwaitValue()
-
-        val resultItem = Operation(null, "Family", 2000.0, null, "Main", "2021-08-06")
+        val sumOperations = getSumOperationContains()
+        val resultItem = Operation(null, "Family", 2000.0, null, "Main", "2021-08-06", "income")
 
         assertThat(sumOperations).contains(resultItem)
-
     }
 
     @Test
     fun getTotalOperationsByPeriod_NotContain() = runBlockingTest {
         setupTestingItems()
-
-        val sumOperations =
-            dao.getTotalOperationsByPeriod("2021-08-01", "2021-08-03").getOrAwaitValue()
-
-        val resultItem = Operation(null, "Family", 2000.0, null, "Main", "2021-08-06")
+        val sumOperations = getSumOperationNotContains()
+        val resultItem = Operation(null, "Family", 2000.0, null, "Main", "2021-08-06", "income")
 
         assertThat(sumOperations).doesNotContain(resultItem)
-
     }
-    private suspend fun setupTestingItems(){
-        val testingItem1 = Operation(1, "Family", 1000.0, null, "Main", "2021-08-06")
-        val testingItem2 = Operation(2, "Family", 1000.0, null, "Main", "2021-08-06")
+
+    @Test
+    fun getTotalOperationsByPeriodIncome_contain() = runBlockingTest {
+        setupTestingItems()
+        val sumOperations = getSumOperationContains()
+        val resultItem = Operation(null, "Family", 2000.0, null, "Main", "2021-08-06", "income")
+
+        assertThat(sumOperations).contains(resultItem)
+    }
+
+    fun getTotalOperationsByPeriodIncome_notContain() = runBlockingTest {
+        setupTestingItems()
+        val sumOperations = getSumOperationContains()
+        val resultItem = Operation(null, "Family", 2000.0, null, "Main", "2021-08-06", "expenses")
+        assertThat(sumOperations).doesNotContain(resultItem)
+    }
+
+    private suspend fun setupTestingItems() {
+        val testingItem1 = Operation(1, "Family", 1000.0, null, "Main", "2021-08-06", "income")
+        val testingItem2 = Operation(2, "Family", 1000.0, null, "Main", "2021-08-06", "income")
         dao.insert(testingItem1)
         dao.insert(testingItem2)
+    }
+
+    private fun getSumOperationContains(): List<Operation> {
+        return dao.getTotalOperationsByPeriod("2021-08-05", "2021-08-07", INCOME_BALANCE)
+            .getOrAwaitValue()
+    }
+
+    private fun getSumOperationNotContains(): List<Operation> {
+        return dao.getTotalOperationsByPeriod("2021-08-01", "2021-08-03", INCOME_BALANCE)
+            .getOrAwaitValue()
     }
 }

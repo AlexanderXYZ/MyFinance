@@ -9,8 +9,12 @@ class Repository @Inject constructor(
     private val daoHelper: DaoHelper
 ) {
     fun getOperations(): LiveData<List<Operation>> = daoHelper.getOperations()
-    fun getTotalOperationsByDate(startDate: String, endDate: String): LiveData<List<Operation>> =
-        daoHelper.getTotalOperationsByPeriod(startDate, endDate)
+    fun getTotalOperationsByDate(
+        startDate: String,
+        endDate: String,
+        balance: String
+    ): LiveData<List<Operation>> =
+        daoHelper.getTotalOperationsByPeriod(startDate, endDate, balance)
 
     suspend fun insert(operation: Operation) {
         daoHelper.insert(operation)

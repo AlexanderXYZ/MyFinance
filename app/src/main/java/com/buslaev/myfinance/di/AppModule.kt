@@ -2,6 +2,9 @@ package com.buslaev.myfinance.di
 
 import android.content.Context
 import androidx.room.Room
+import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
+import com.buslaev.myfinance.adapters.MainAdapter
 import com.buslaev.myfinance.db.room.DaoHelper
 import com.buslaev.myfinance.db.room.DaoHelperIml
 import com.buslaev.myfinance.db.room.FinanceDao
@@ -31,4 +34,12 @@ object AppModule {
     @Provides
     @Singleton
     fun provideDaoHelper(daoHelperIml: DaoHelperIml): DaoHelper = daoHelperIml
+
+    @Provides
+    @Singleton
+    fun provideGlide(@ApplicationContext context: Context): RequestManager = Glide.with(context)
+
+    @Provides
+    @Singleton
+    fun provideMainAdapter(glide: RequestManager): MainAdapter = MainAdapter(glide)
 }
