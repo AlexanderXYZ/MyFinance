@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.appcompat.app.ActionBar
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -16,7 +15,6 @@ import com.buslaev.myfinance.R
 import com.buslaev.myfinance.adapters.MainAdapter
 import com.buslaev.myfinance.databinding.FragmentMainBinding
 import com.buslaev.myfinance.entities.Operation
-import com.buslaev.myfinance.other.Constants.APP_ACTIVITY
 import com.buslaev.myfinance.other.Constants.EXPENSES_BALANCE
 import com.buslaev.myfinance.other.Constants.INCOME_BALANCE
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -97,7 +95,7 @@ class MainFragment : Fragment() {
                     mViewModel.getOperationsByDay(balance)
                 }
                 R.id.weak_menu -> {
-                    mViewModel.getOperationsByWeak(balance)
+                    mViewModel.getOperationsByWeek(balance)
                 }
                 R.id.month_menu -> {
                     mViewModel.getOperationsByMonth(balance)

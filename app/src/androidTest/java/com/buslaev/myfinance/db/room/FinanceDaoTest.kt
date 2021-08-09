@@ -103,12 +103,12 @@ class FinanceDaoTest {
     }
 
     private fun getSumOperationContains(): List<Operation> {
-        return dao.getTotalOperationsByPeriod("2021-08-05", "2021-08-07", INCOME_BALANCE)
+        return dao.getOperationsByPeriod("2021-08-05", "2021-08-07", INCOME_BALANCE)
             .getOrAwaitValue()
     }
 
     private fun getSumOperationNotContains(): List<Operation> {
-        return dao.getTotalOperationsByPeriod("2021-08-01", "2021-08-03", INCOME_BALANCE)
+        return dao.getOperationsByPeriod("2021-08-01", "2021-08-03", INCOME_BALANCE)
             .getOrAwaitValue()
     }
 }
