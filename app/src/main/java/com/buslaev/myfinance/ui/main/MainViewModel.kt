@@ -1,6 +1,5 @@
 package com.buslaev.myfinance.ui.main
 
-import android.os.Build
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,9 +9,6 @@ import com.buslaev.myfinance.entities.Operation
 import com.buslaev.myfinance.other.DateHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
-import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -68,7 +64,7 @@ class MainViewModel @Inject constructor(
     }
 
     private fun insertOperationIntoDb(operation: Operation) = viewModelScope.launch {
-        repository.insert(operation)
+        repository.insertOperation(operation)
     }
 
 }

@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
+import com.buslaev.myfinance.adapters.CategoriesAdapter
+import com.buslaev.myfinance.adapters.IconsViewPagerAdapter
 import com.buslaev.myfinance.adapters.MainAdapter
 import com.buslaev.myfinance.db.room.FinanceDao
 import com.buslaev.myfinance.db.room.FinanceDatabase
@@ -36,4 +38,14 @@ object AppModule {
     @Provides
     @Singleton
     fun provideMainAdapter(glide: RequestManager): MainAdapter = MainAdapter(glide)
+
+    @Provides
+    @Singleton
+    fun provideCategoriesAdapter(glide: RequestManager): CategoriesAdapter =
+        CategoriesAdapter(glide)
+
+    @Provides
+    @Singleton
+    fun provideIconsViewPagerAdapter(glide: RequestManager): IconsViewPagerAdapter =
+        IconsViewPagerAdapter(glide)
 }

@@ -3,14 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/drawable/background_circle.xml" value="0.5615384615384615" />
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/drawable/background_inputs_logging.xml" value="0.5615384615384615" />
+        <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/drawable/ic_add.xml" value="0.5615384615384615" />
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/drawable/ic_home.xml" value="0.5615384615384615" />
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/drawable/logging_background.xml" value="0.5615384615384615" />
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/drawable/main_background_item.xml" value="0.5615384615384615" />
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/drawable/transparent_circle.xml" value="0.5615384615384615" />
+        <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/drawable/viewpager_indicators.xml" value="0.5615384615384615" />
+        <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/drawable/viewpager_not_selected.xml" value="0.5615384615384615" />
+        <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/drawable/viewpager_selected.xml" value="0.5615384615384615" />
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/layout/action_bar_layout.xml" value="0.5541666666666667" />
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/layout/activity_main.xml" value="0.4773550724637681" />
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/layout/activity_splash_screen.xml" value="0.5541666666666667" />
+        <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/layout/categories_item.xml" value="0.5" />
+        <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/layout/fragment_add_category.xml" value="0.5541666666666667" />
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/layout/fragment_add_operation.xml" value="0.5541666666666667" />
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/layout/fragment_categories.xml" value="0.5541666666666667" />
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/layout/fragment_graphs.xml" value="0.5541666666666667" />
@@ -21,6 +28,7 @@
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/layout/fragment_registration.xml" value="0.5541666666666667" />
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/layout/fragment_settings.xml" value="0.5541666666666667" />
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/layout/fragment_sign_in.xml" value="0.5541666666666667" />
+        <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/layout/icon_item.xml" value="0.5541666666666667" />
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/layout/main_graph_item.xml" value="0.5541666666666667" />
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/layout/splash_screen.xml" value="0.5541666666666667" />
         <entry key="..\:/AndroidProjects/MyFinance/app/src/main/res/menu/bottom_nav_menu.xml" value="0.5541666666666667" />

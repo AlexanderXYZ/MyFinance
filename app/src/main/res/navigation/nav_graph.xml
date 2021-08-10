@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_categoriesFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_categoriesFragment_to_addCategoryFragment"
+            app:destination="@id/addCategoryFragment" />
     </fragment>
     <fragment
         android:id="@+id/graphsFragment"
@@ -105,5 +108,14 @@
         <action
             android:id="@+id/action_operationsFragment_to_addOperationFragment"
             app:destination="@id/addOperationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addCategoryFragment"
+        android:name="com.buslaev.myfinance.ui.addCategory.AddCategoryFragment"
+        android:label="fragment_add_category"
+        tools:layout="@layout/fragment_add_category" >
+        <action
+            android:id="@+id/action_addCategoryFragment_to_categoriesFragment"
+            app:destination="@id/categoriesFragment" />
     </fragment>
 </navigation>
