@@ -5,11 +5,13 @@ import androidx.room.Room
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.buslaev.myfinance.adapters.CategoriesAdapter
-import com.buslaev.myfinance.adapters.IconsViewPagerAdapter
+import com.buslaev.myfinance.adapters.IconsAdapter
 import com.buslaev.myfinance.adapters.MainAdapter
+import com.buslaev.myfinance.db.room.DaoHelper
 import com.buslaev.myfinance.db.room.FinanceDao
 import com.buslaev.myfinance.db.room.FinanceDatabase
 import com.buslaev.myfinance.other.Constants.DATABASE_NAME
+import com.buslaev.myfinance.repository.Repository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,6 +35,12 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideRepository(
+        dao: FinanceDao
+    ) = Repository(dao) as DaoHelper
+
+    @Provides
+    @Singleton
     fun provideGlide(@ApplicationContext context: Context): RequestManager = Glide.with(context)
 
     @Provides
@@ -46,6 +54,6 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideIconsViewPagerAdapter(glide: RequestManager): IconsViewPagerAdapter =
-        IconsViewPagerAdapter(glide)
+    fun provideIconsViewPagerAdapter(glide: RequestManager): IconsAdapter =
+        IconsAdapter(glide)
 }

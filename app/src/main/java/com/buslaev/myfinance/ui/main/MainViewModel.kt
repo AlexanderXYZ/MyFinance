@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.buslaev.myfinance.db.room.DaoHelper
 import com.buslaev.myfinance.entities.Operation
+import com.buslaev.myfinance.entities.OperationBySum
 import com.buslaev.myfinance.other.DateHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -18,11 +19,11 @@ class MainViewModel @Inject constructor(
 
     private val dateHelper = DateHelper()
 
-    private var _incomeOperations: MutableLiveData<List<Operation>> = MutableLiveData()
-    val incomeOperations: LiveData<List<Operation>> get() = _incomeOperations
+    private var _incomeOperations: MutableLiveData<List<OperationBySum>> = MutableLiveData()
+    val incomeOperations: LiveData<List<OperationBySum>> get() = _incomeOperations
 
-    private var _expensesOperations: MutableLiveData<List<Operation>> = MutableLiveData()
-    val expensesOperations: LiveData<List<Operation>> get() = _expensesOperations
+    private var _expensesOperations: MutableLiveData<List<OperationBySum>> = MutableLiveData()
+    val expensesOperations: LiveData<List<OperationBySum>> get() = _expensesOperations
 
     fun getIncomeOperations() {}
     fun getExpensesOperation() {}

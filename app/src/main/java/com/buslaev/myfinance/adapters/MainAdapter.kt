@@ -9,13 +9,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.buslaev.myfinance.R
 import com.buslaev.myfinance.entities.Operation
+import com.buslaev.myfinance.entities.OperationBySum
 import javax.inject.Inject
 
 class MainAdapter @Inject constructor(
     private val glide: RequestManager
 ) : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
 
-    private var mList = emptyList<Operation>()
+    private var mList = emptyList<OperationBySum>()
     private var mAllMoney: Double = 0.0
 
     inner class MainViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -35,10 +36,10 @@ class MainAdapter @Inject constructor(
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
         val currentPos = mList[position]
         holder.apply {
-            title.text = currentPos.title
-            glide
-                .load(currentPos.icon)
-                .into(image)
+            //title.text = currentPos.title
+//            glide
+//                .load(currentPos.icon)
+//                .into(image)
             percent.text = ((currentPos.value.div(mAllMoney)).times(100)).toString()
             money.text = currentPos.value.toString()
         }
@@ -48,7 +49,7 @@ class MainAdapter @Inject constructor(
         return mList.size
     }
 
-    fun setList(list: List<Operation>) {
+    fun setList(list: List<OperationBySum>) {
         mAllMoney = list.sumOf { it.value }
         mList = list
         notifyDataSetChanged()

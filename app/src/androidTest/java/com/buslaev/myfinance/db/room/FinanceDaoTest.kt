@@ -1,11 +1,15 @@
 package com.buslaev.myfinance.db.room
 
+import android.util.Log
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
+import com.buslaev.myfinance.entities.Categories
 import com.buslaev.myfinance.entities.Operation
+import com.buslaev.myfinance.entities.OperationBySum
+import com.buslaev.myfinance.entities.relations.OperationAndCategories
 import com.buslaev.myfinance.getOrAwaitValue
 import com.buslaev.myfinance.other.Constants.INCOME_BALANCE
 import com.google.common.truth.Truth.assertThat
@@ -28,6 +32,10 @@ class FinanceDaoTest {
     private lateinit var database: FinanceDatabase
     private lateinit var dao: FinanceDao
 
+    private val defaultCategory = Categories(1, "Family", null, "", INCOME_BALANCE)
+    private val defaultOperation =
+        Operation(1, 1000.0, "", "2021-08-06", INCOME_BALANCE, 1)
+
     @Before
     fun setup() {
         database = Room.inMemoryDatabaseBuilder(
@@ -44,71 +52,184 @@ class FinanceDaoTest {
 
     @Test
     fun insertOperation() = runBlockingTest {
-        val testingItem = Operation(1, "Family", 1000.0, null, "Main", "", "")
-        dao.insert(testingItem)
+        val operation = Operation(1, 1000.0, "Main", "", "")
+        dao.insertOperation(operation)
 
         val operations = dao.getOperations().getOrAwaitValue()
-        assertThat(operations).contains(testingItem)
+        assertThat(operations).contains(operation)
     }
 
     @Test
     fun deleteOperation() = runBlockingTest {
-        val testingItem = Operation(1, "Family", 1000.0, null, "Main", "", "")
-        dao.insert(testingItem)
-        dao.delete(testingItem)
+        val operation = Operation(1, 1000.0, "Main", "", "")
+        dao.insertOperation(operation)
+        dao.deleteOperation(operation)
 
         val operations = dao.getOperations().getOrAwaitValue()
-        assertThat(operations).doesNotContain(testingItem)
+        assertThat(operations).doesNotContain(operation)
     }
 
     @Test
-    fun getTotalOperationsByPeriod_contain() = runBlockingTest {
-        setupTestingItems()
-        val sumOperations = getSumOperationContains()
-        val resultItem = Operation(null, "Family", 2000.0, null, "Main", "2021-08-06", "income")
+    fun insertCategory() = runBlockingTest {
+        val category = Categories(1, "", null, "", INCOME_BALANCE)
+        dao.insertCategory(category)
 
-        assertThat(sumOperations).contains(resultItem)
+        val result = dao.getCategories(INCOME_BALANCE).getOrAwaitValue()
+        Log.d("TAG",result.toString())
+        assertThat(result).contains(category)
     }
 
     @Test
-    fun getTotalOperationsByPeriod_NotContain() = runBlockingTest {
-        setupTestingItems()
-        val sumOperations = getSumOperationNotContains()
-        val resultItem = Operation(null, "Family", 2000.0, null, "Main", "2021-08-06", "income")
+    fun deleteCategory() = runBlockingTest {
+        val category = Categories(1, "", null, "", "")
+        dao.insertCategory(category)
+        dao.deleteCategory(category)
 
-        assertThat(sumOperations).doesNotContain(resultItem)
+        val result = dao.getCategories(INCOME_BALANCE).getOrAwaitValue()
+        assertThat(result).doesNotContain(category)
+    }
+
+//    @Test
+//    fun getTotalOperationsByPeriod_contain() = runBlockingTest {
+//        setupTestingItems()
+//        val sumOperations = getSumOperationContains()
+//        val resultItem = Operation(null, 2000.0, "Main", "2021-08-06", "income")
+//
+//        assertThat(sumOperations).contains(resultItem)
+//    }
+//
+//    @Test
+//    fun getTotalOperationsByPeriod_NotContain() = runBlockingTest {
+//        setupTestingItems()
+//        val sumOperations = getSumOperationNotContains()
+//        val resultItem = Operation(null, 2000.0, "Main", "2021-08-06", "income")
+//
+//        assertThat(sumOperations).doesNotContain(resultItem)
+//    }
+//
+//    @Test
+//    fun getTotalOperationsByPeriodIncome_contain() = runBlockingTest {
+//        setupTestingItems()
+//        val sumOperations = getSumOperationContains()
+//        val resultItem = Operation(null, 2000.0, "Main", "2021-08-06", "income")
+//
+//        assertThat(sumOperations).contains(resultItem)
+//    }
+//
+//    fun getTotalOperationsByPeriodIncome_notContain() = runBlockingTest {
+//        setupTestingItems()
+//        val sumOperations = getSumOperationNotContains()
+//        val resultItem = Operation(null, 2000.0, "Main", "2021-08-06", "expenses")
+//        assertThat(sumOperations).doesNotContain(resultItem)
+//    }
+//
+//    private suspend fun setupTestingItems() {
+//        val testingItem1 = Operation(1, 1000.0, "Main", "2021-08-06", "income")
+//        val testingItem2 = Operation(2, 1000.0, "Main", "2021-08-06", "income")
+//        dao.insertOperation(testingItem1)
+//        dao.insertOperation(testingItem2)
+//    }
+//
+//    private fun getSumOperationContains(): List<Operation> {
+//        return dao.getOperationsByPeriod("2021-08-05", "2021-08-07", INCOME_BALANCE)
+//            .getOrAwaitValue()
+//    }
+//
+//    private fun getSumOperationNotContains(): List<Operation> {
+//        return dao.getOperationsByPeriod("2021-08-01", "2021-08-03", INCOME_BALANCE)
+//            .getOrAwaitValue()
+//    }
+
+    @Test
+    fun getOperationsWithCategories_contain() = runBlockingTest {
+        dao.insertCategory(defaultCategory)
+        dao.insertOperation(defaultOperation)
+
+        val result = dao.getOperationsWithCategories().getOrAwaitValue()
+        val expected = OperationAndCategories(defaultOperation, defaultCategory)
+        Log.d("TAG", result.toString())
+
+        assertThat(result).contains(expected)
     }
 
     @Test
-    fun getTotalOperationsByPeriodIncome_contain() = runBlockingTest {
-        setupTestingItems()
-        val sumOperations = getSumOperationContains()
-        val resultItem = Operation(null, "Family", 2000.0, null, "Main", "2021-08-06", "income")
+    fun getOperationsWithCategoriesAfterDeletingCategory_doesNotContain() = runBlockingTest {
+        dao.insertCategory(defaultCategory)
+        dao.insertOperation(defaultOperation)
 
-        assertThat(sumOperations).contains(resultItem)
+        dao.deleteCategory(defaultCategory)
+
+        val result = dao.getOperationsWithCategories().getOrAwaitValue()
+        val expected = OperationAndCategories(defaultOperation, defaultCategory)
+        Log.d("TAG", result.toString())
+
+        assertThat(result).doesNotContain(expected)
     }
 
-    fun getTotalOperationsByPeriodIncome_notContain() = runBlockingTest {
-        setupTestingItems()
-        val sumOperations = getSumOperationContains()
-        val resultItem = Operation(null, "Family", 2000.0, null, "Main", "2021-08-06", "expenses")
-        assertThat(sumOperations).doesNotContain(resultItem)
+//    @Test
+//    fun getOperationsWithCategoriesByPeriod_contain() = runBlockingTest {
+//        dao.insertCategory(defaultCategory)
+//        dao.insertOperation(defaultOperation)
+//
+//        val result =
+//            dao.getOperationsWithCategoriesByPeriod("2021-08-01", "2021-08-20", INCOME_BALANCE)
+//                .getOrAwaitValue()
+//        val expected = OperationAndCategories(defaultOperation, defaultCategory)
+//        Log.d("TAG", result.toString())
+//
+//        assertThat(result).contains(expected)
+//    }
+//
+//    @Test
+//    fun getOperationsWithCategoriesByPeriod_doesNotContain() = runBlockingTest {
+//        dao.insertCategory(defaultCategory)
+//        dao.insertOperation(defaultOperation)
+//
+//        val result =
+//            dao.getOperationsWithCategoriesByPeriod("2021-08-01", "2021-08-02", INCOME_BALANCE)
+//                .getOrAwaitValue()
+//
+//        val expected = OperationAndCategories(defaultOperation, defaultCategory)
+//        Log.d("TAG", result.toString())
+//
+//        assertThat(result).doesNotContain(expected)
+//    }
+
+    @Test
+    fun getSumOperationsWithCategoriesByPeriod_contain() = runBlockingTest {
+        dao.insertCategory(defaultCategory)
+        dao.insertOperation(defaultOperation)
+        val defaultOperation2 =
+            Operation(2, 1000.0, "", "2021-08-06", INCOME_BALANCE, 1)
+        dao.insertOperation(defaultOperation2)
+
+        val result =
+            dao.getSumOperationsWithCategoriesByPeriod("2021-08-01", "2021-08-20", INCOME_BALANCE)
+                .getOrAwaitValue()
+
+        val expected =
+            OperationBySum(2000.0, "", "2021-08-06", INCOME_BALANCE, "Family", null, "")
+        Log.d("TAG", result.toString())
+
+        assertThat(result).contains(expected)
     }
 
-    private suspend fun setupTestingItems() {
-        val testingItem1 = Operation(1, "Family", 1000.0, null, "Main", "2021-08-06", "income")
-        val testingItem2 = Operation(2, "Family", 1000.0, null, "Main", "2021-08-06", "income")
-        dao.insert(testingItem1)
-        dao.insert(testingItem2)
-    }
+    @Test
+    fun getSumOperationsWithCategoriesByPeriod_doesNotContain() = runBlockingTest {
+        dao.insertCategory(defaultCategory)
+        dao.insertOperation(defaultOperation)
+        val defaultOperation2 =
+            Operation(2, 1000.0, "", "2021-08-06", INCOME_BALANCE, 1)
+        dao.insertOperation(defaultOperation2)
 
-    private fun getSumOperationContains(): List<Operation> {
-        return dao.getOperationsByPeriod("2021-08-05", "2021-08-07", INCOME_BALANCE)
-            .getOrAwaitValue()
-    }
+        val result =
+            dao.getSumOperationsWithCategoriesByPeriod("2021-08-01", "2021-08-02", INCOME_BALANCE)
+                .getOrAwaitValue()
 
-    private fun getSumOperationNotContains(): List<Operation> {
-        return dao.getOperationsByPeriod("2021-08-01", "2021-08-03", INCOME_BALANCE)
-            .getOrAwaitValue()
+        val expected =
+            OperationBySum(2000.0, "", "2021-08-06", INCOME_BALANCE, "Family", null, "")
+        Log.d("TAG", result.toString())
+
+        assertThat(result).doesNotContain(expected)
     }
 }

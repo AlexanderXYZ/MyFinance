@@ -15,6 +15,7 @@ import com.buslaev.myfinance.R
 import com.buslaev.myfinance.adapters.MainAdapter
 import com.buslaev.myfinance.databinding.FragmentMainBinding
 import com.buslaev.myfinance.entities.Operation
+import com.buslaev.myfinance.entities.OperationBySum
 import com.buslaev.myfinance.other.Constants.EXPENSES_BALANCE
 import com.buslaev.myfinance.other.Constants.INCOME_BALANCE
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -33,7 +34,7 @@ class MainFragment : Fragment() {
     @Inject
     lateinit var mAdapter: MainAdapter
     private lateinit var mRecyclerView: RecyclerView
-    private lateinit var mObserver: Observer<List<Operation>>
+    private lateinit var mObserver: Observer<List<OperationBySum>>
 
     private lateinit var mBalanceNavigation: BottomNavigationView
     private lateinit var mPeriodsNavigation: BottomNavigationView

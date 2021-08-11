@@ -1,9 +1,9 @@
 package com.buslaev.myfinance.adapters
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Adapter
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -36,7 +36,9 @@ class CategoriesAdapter @Inject constructor(
             glide
                 .load(currentPos.icon)
                 .into(icon)
-            icon.setBackgroundColor(currentPos.backgroundColor)
+            val color = Color.parseColor(currentPos.backgroundColor)
+            icon.background.setTint(color)
+            title.setTextColor(color)
         }
     }
 

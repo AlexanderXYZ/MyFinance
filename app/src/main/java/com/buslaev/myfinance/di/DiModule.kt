@@ -11,7 +11,7 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 abstract class DiModule {
 
-
-    @Binds
-    abstract fun bindDaoHelper(repository: Repository): DaoHelper
+//
+//    @Binds
+//    abstract fun bindDaoHelper(repository: Repository): DaoHelper
 }
