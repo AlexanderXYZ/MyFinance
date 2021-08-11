@@ -50,5 +50,7 @@
     <string name="currency_default_name">RUB</string>
     <string name="account_default_name">Account</string>
     <string name="categories_default_name">Categories</string>
+    <string name="default_title_color_picker">Choose Color</string>
+    <string name="default_hint_title_of_category">Title of category</string>
     <!--  -->
 </resources>

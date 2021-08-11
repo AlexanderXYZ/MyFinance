@@ -109,6 +109,9 @@ dependencies {
     // Color Picker
     implementation 'com.github.dhaval2404:colorpicker:2.0'
 
+    // MultiSnapRecyclerView
+    implementation 'com.github.takusemba:multisnaprecyclerview:2.0.3'
+
     // Local Unit Tests
     implementation "androidx.test:core:1.4.0"
     testImplementation "junit:junit:4.13.2"

@@ -71,4 +71,15 @@ class MainActivity : AppCompatActivity() {
         bottomNavView.visibility = View.GONE
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
+
+    fun displayTitle(dTitle: String) {
+        supportActionBar?.apply {
+            displayOptions = ActionBar.DISPLAY_SHOW_TITLE
+            title = dTitle
+        }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp()
+    }
 }

@@ -5,30 +5,35 @@ import com.buslaev.myfinance.db.room.DaoHelper
 import com.buslaev.myfinance.db.room.FinanceDao
 import com.buslaev.myfinance.entities.Categories
 import com.buslaev.myfinance.entities.Operation
+import com.buslaev.myfinance.entities.OperationBySum
 import javax.inject.Inject
 
 class Repository @Inject constructor(
     private val dao: FinanceDao
-):DaoHelper {
+) : DaoHelper {
     override fun getOperationsByPeriod(
         startDate: String,
         endDate: String,
         balance: String
-    ): LiveData<List<Operation>> = dao.getOperationsByPeriod(startDate, endDate, balance)
+    ): LiveData<List<OperationBySum>> =
+        dao.getSumOperationsWithCategoriesByPeriod(startDate, endDate, balance)
+
+    override fun getCategories(balance: String): LiveData<List<Categories>> =
+        dao.getCategories(balance)
 
     override suspend fun insertOperation(operation: Operation) {
-        dao.insert(operation)
+        dao.insertOperation(operation)
     }
 
     override suspend fun deleteOperation(operation: Operation) {
-        dao.delete(operation)
+        dao.deleteOperation(operation)
     }
 
     override suspend fun insertCategory(category: Categories) {
-
+        dao.insertCategory(category)
     }
 
     override suspend fun deleteCategory(category: Categories) {
-
+        dao.deleteCategory(category)
     }
 }

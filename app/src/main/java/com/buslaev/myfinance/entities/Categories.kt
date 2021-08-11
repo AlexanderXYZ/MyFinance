@@ -7,10 +7,10 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "categories")
 data class Categories(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
-    var id: Int? = null,
+    @ColumnInfo(name = "idCategory")
+    var idCategory: Int? = null,
     @ColumnInfo(name = "title") var title: String = "",
     @ColumnInfo(name = "icon") var icon: Int? = null,
-    @ColumnInfo(name = "backgroundColor") var backgroundColor: Int = 0,
+    @ColumnInfo(name = "backgroundColor") var backgroundColor: String = "#FFBB86FC",
     @ColumnInfo(name = "balance") var balance: String = ""
 )
