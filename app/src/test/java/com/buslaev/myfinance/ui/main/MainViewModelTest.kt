@@ -2,6 +2,7 @@ package com.buslaev.myfinance.ui.main
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.buslaev.myfinance.entities.Operation
+import com.buslaev.myfinance.entities.OperationBySum
 import com.buslaev.myfinance.other.Constants.INCOME_BALANCE
 import com.buslaev.myfinance.ui.main.repository.FakeRepository
 import com.google.common.truth.Truth.assertThat
@@ -25,7 +26,7 @@ class MainViewModelTest {
     private lateinit var viewModel: MainViewModel
     private val localDate = LocalDate()
     private val expectedOperation =
-        Operation(null, "Family", 1000.0, null, "", localDate.toString(), INCOME_BALANCE)
+        OperationBySum(1000.0, "", localDate.toString(), INCOME_BALANCE, "Family", null, "")
 
     @Before
     fun setup() {
@@ -34,7 +35,7 @@ class MainViewModelTest {
 
     private fun setupTestingValues(day: String) {
         val operation1 =
-            Operation(null, "Family", 1000.0, null, "", day, INCOME_BALANCE)
+            Operation(null, 1000.0, "", day, INCOME_BALANCE)
         viewModel.insertOperation(operation1)
     }
 

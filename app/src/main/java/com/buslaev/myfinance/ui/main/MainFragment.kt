@@ -17,7 +17,9 @@ import com.buslaev.myfinance.databinding.FragmentMainBinding
 import com.buslaev.myfinance.entities.Operation
 import com.buslaev.myfinance.entities.OperationBySum
 import com.buslaev.myfinance.other.Constants.EXPENSES_BALANCE
+import com.buslaev.myfinance.other.Constants.FRAGMENT_MAIN
 import com.buslaev.myfinance.other.Constants.INCOME_BALANCE
+import com.buslaev.myfinance.other.Constants.PARENT_FRAGMENT_KEY
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -67,7 +69,12 @@ class MainFragment : Fragment() {
 
     private fun initFields() {
         (activity as MainActivity).floatingActionButton.setOnClickListener {
-            (activity as MainActivity).navController.navigate(R.id.action_mainFragment_to_addOperationFragment)
+            val bundle = Bundle()
+            bundle.putString(PARENT_FRAGMENT_KEY, FRAGMENT_MAIN)
+            (activity as MainActivity).navController.navigate(
+                R.id.action_mainFragment_to_addOperationFragment,
+                bundle
+            )
         }
     }
 
@@ -84,7 +91,7 @@ class MainFragment : Fragment() {
                     mViewModel.expensesOperations.observe(viewLifecycleOwner, mObserver)
                 }
             }
-            return@setOnItemSelectedListener false
+            return@setOnItemSelectedListener true
         }
     }
 

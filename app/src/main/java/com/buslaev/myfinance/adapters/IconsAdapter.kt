@@ -9,6 +9,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.buslaev.myfinance.R
+import com.buslaev.myfinance.other.Constants.COLOR_DEFAULT_ICON
 import javax.inject.Inject
 
 class IconsAdapter @Inject constructor(
@@ -43,8 +44,7 @@ class IconsAdapter @Inject constructor(
                 }
             } else {
                 background.visibility = View.GONE
-                val defaultColor = "#" + Integer.toHexString(R.color.less_blue)
-                icon.background.setTint(Color.parseColor(defaultColor))
+                icon.background.setTint(Color.parseColor(COLOR_DEFAULT_ICON))
             }
             icon.setOnClickListener {
                 val oldItemPos = currentItemPos
