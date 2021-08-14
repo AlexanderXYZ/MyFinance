@@ -21,6 +21,12 @@ class Repository @Inject constructor(
     override fun getCategories(balance: String): LiveData<List<Categories>> =
         dao.getCategories(balance)
 
+    override fun getOperationsSortedByDate(
+        format: String,
+        balance: String
+    ): LiveData<List<OperationBySum>> =
+        dao.getOperationsSortedByDate(format, balance)
+
     override suspend fun insertOperation(operation: Operation) {
         dao.insertOperation(operation)
     }
@@ -36,4 +42,5 @@ class Repository @Inject constructor(
     override suspend fun deleteCategory(category: Categories) {
         dao.deleteCategory(category)
     }
+
 }

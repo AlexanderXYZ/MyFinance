@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/chart_on_days"
+        android:title="on days" />
+    <item
+        android:id="@+id/chart_on_weeks"
+        android:title="on weeks" />
+    <item
+        android:id="@+id/chart_on_months"
+        android:title="on months" />
+    <item
+        android:id="@+id/chart_on_years"
+        android:title="on years" />
+</menu>

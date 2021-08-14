@@ -52,5 +52,6 @@
     <string name="categories_default_name">Categories</string>
     <string name="default_title_color_picker">Choose Color</string>
     <string name="default_hint_title_of_category">Title of category</string>
+    <string name="general_title_menu">GENERAL</string>
     <!--  -->
 </resources>

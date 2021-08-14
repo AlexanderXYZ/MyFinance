@@ -15,6 +15,8 @@ interface DaoHelper {
 
     fun getCategories(balance: String): LiveData<List<Categories>>
 
+    fun getOperationsSortedByDate(format: String, balance: String): LiveData<List<OperationBySum>>
+
     suspend fun insertOperation(operation: Operation)
     suspend fun deleteOperation(operation: Operation)
 

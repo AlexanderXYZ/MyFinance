@@ -59,4 +59,10 @@ interface FinanceDao {
         endDate: String,
         balance: String
     ): LiveData<List<OperationBySum>>
+
+    @Query("SELECT SUM(o.value) as value,o.account,o.dateTime,o.balance,c.title as titleCategory,c.icon as iconCategory,c.backgroundColor FROM operations as o INNER JOIN categories as c ON o.idCategory=c.idCategory WHERE o.balance = :balance GROUP BY o.idCategory AND strftime(:format,o.dateTime) ORDER BY date(o.dateTime) DESC")
+    fun getOperationsSortedByDate(
+        format: String,
+        balance: String
+    ): LiveData<List<OperationBySum>>
 }

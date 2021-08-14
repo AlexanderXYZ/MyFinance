@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/general_chart_menu"
+        android:title="@string/general_title_menu" />
+    <item
+        android:id="@+id/income_chart_menu"
+        android:title="@string/income_title_menu" />
+    <item
+        android:id="@+id/expenses_chart_menu"
+        android:title="@string/expenses_title_menu" />
+</menu>

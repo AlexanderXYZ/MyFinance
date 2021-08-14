@@ -13,8 +13,25 @@ class DateHelper {
     private var startDate: String = ""
     private var endDate: String = ""
 
+
     fun getStartDate(): String = startDate
     fun getEndDate(): String = endDate
+
+    fun getDayFormat(): String {
+        return ""
+    }
+
+    fun getWeekFormat(): String {
+        return ""
+    }
+
+    fun getMonthFormat(): String {
+        return "%Y-%m"
+    }
+
+    fun getYearFormat(): String {
+        return ""
+    }
 
     fun setDatesByToday() {
         val currentDate = localDate.toString()
