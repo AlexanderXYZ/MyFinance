@@ -17,4 +17,5 @@ object Constants {
     const val COLOR_TRANSPARENT = "#00000000"
     const val COLOR_SELECTED_DATE = "#FF018786"
     const val COLOR_DEFAULT_ICON = "#747681"
+    const val MAIN_BACKGROUND_WHIT = "#FAF6F6"
 }

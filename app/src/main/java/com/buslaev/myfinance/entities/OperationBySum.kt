@@ -8,5 +8,5 @@ data class OperationBySum(
     var balance: String = "",
     var titleCategory: String = "",
     var iconCategory: Int? = null,
-    var backgroundColor: String = "",
+    var backgroundColor: String = "#FFBB86FC",
 )

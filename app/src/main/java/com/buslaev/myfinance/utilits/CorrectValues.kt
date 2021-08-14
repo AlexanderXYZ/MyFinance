@@ -23,12 +23,19 @@ class CorrectValues {
         if (dateTime.isEmpty()) {
             return false
         }
-        if (balance != INCOME_BALANCE || balance != EXPENSES_BALANCE) {
+        if (balance != INCOME_BALANCE && balance != EXPENSES_BALANCE) {
             return false
         }
         if (idCategory <= 0) {
             return false
         }
+        correctOperation = Operation(
+            value = value,
+            account = account,
+            dateTime = dateTime,
+            balance = balance,
+            idCategory = idCategory
+        )
         return true
     }
 

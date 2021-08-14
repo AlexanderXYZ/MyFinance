@@ -3,8 +3,11 @@ package com.buslaev.myfinance.ui.addOperation
 import android.app.DatePickerDialog
 import android.graphics.Color
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
@@ -24,6 +27,7 @@ import com.buslaev.myfinance.other.Constants.EXPENSES_BALANCE
 import com.buslaev.myfinance.other.Constants.FRAGMENT_MAIN
 import com.buslaev.myfinance.other.Constants.INCOME_BALANCE
 import com.buslaev.myfinance.other.Constants.PARENT_FRAGMENT_KEY
+import com.buslaev.myfinance.ui.BaseFragment
 import com.buslaev.myfinance.utilits.CorrectValues
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,10 +37,10 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class AddOperationFragment : Fragment(), DatePickerDialog.OnDateSetListener {
+class AddOperationFragment :
+    BaseFragment<FragmentAddOperationBinding>(FragmentAddOperationBinding::inflate),
+    DatePickerDialog.OnDateSetListener {
 
-    private var _binding: FragmentAddOperationBinding? = null
-    private val mBinding get() = _binding!!
 
     private val mViewModel by viewModels<AddOperationViewModel>()
 
@@ -57,14 +61,6 @@ class AddOperationFragment : Fragment(), DatePickerDialog.OnDateSetListener {
 
     private var parentFragment: String = ""
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentAddOperationBinding.inflate(layoutInflater, container, false)
-        return mBinding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         parentFragment = arguments?.getString(PARENT_FRAGMENT_KEY, "").toString()
@@ -78,30 +74,32 @@ class AddOperationFragment : Fragment(), DatePickerDialog.OnDateSetListener {
 
     private fun hideBottomView() {
         (activity as MainActivity).apply {
-            hideBottomNav()
             displayTitle("Adding an operation")
+            hideBottomNav()
         }
     }
 
     private fun setupBalanceNavigation() {
-        mBalanceNavigation = mBinding.balanceNavigationView
+        mBalanceNavigation = binding.balanceNavigationView
+        underlineMenuItem(mBalanceNavigation.menu.getItem(0))
         mBalanceNavigation.setOnItemSelectedListener {
+            removeItemsUnderline(mBalanceNavigation.menu)
+            underlineMenuItem(it)
             when (it.itemId) {
                 R.id.income_menu -> {
-                    setupObserver(INCOME_BALANCE)
                     balance = INCOME_BALANCE
                 }
                 R.id.expenses_menu -> {
-                    setupObserver(EXPENSES_BALANCE)
                     balance = EXPENSES_BALANCE
                 }
             }
+            setupObserver(balance)
             return@setOnItemSelectedListener true
         }
     }
 
     private fun setupCategoriesRecyclerView() {
-        mRecyclerView = mBinding.categoriesRecyclerView
+        mRecyclerView = binding.categoriesRecyclerView
         mRecyclerView.apply {
             adapter = mAdapter
             layoutManager = GridLayoutManager(requireContext(), 4)
@@ -127,31 +125,31 @@ class AddOperationFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         val localDate = LocalDate()
         val today = localDate.toString()
         val yesterday = localDate.minusDays(1).toString()
-        mBinding.todayDateTextView.apply {
+        binding.todayDateTextView.apply {
             text = "${today.substringAfter('-')}\ntoday"
             setOnClickListener {
                 setBackgroundsOfDates(it)
                 dateTime = today
             }
         }
-        mBinding.yesterdayDateTextView.apply {
+        binding.yesterdayDateTextView.apply {
             text = "${yesterday.substringAfter('-')}\nyesterday"
             setOnClickListener {
                 setBackgroundsOfDates(it)
                 dateTime = yesterday
             }
         }
-        mBinding.selectedDateTextView.text = "${today.substringAfter('-')}\nselected"
-        mBinding.selectDateFab.setOnClickListener {
+        binding.selectedDateTextView.text = "${today.substringAfter('-')}\nselected"
+        binding.selectDateFab.setOnClickListener {
             showDatePickerDialog()
-            setBackgroundsOfDates(mBinding.selectedDateTextView)
+            setBackgroundsOfDates(binding.selectedDateTextView)
         }
     }
 
     private fun setBackgroundsOfDates(it: View?) {
         val defaultColor = Color.parseColor(COLOR_TRANSPARENT)
         val selectedColor = Color.parseColor(COLOR_SELECTED_DATE)
-        mBinding.apply {
+        binding.apply {
             todayDateTextView.setBackgroundColor(defaultColor)
             yesterdayDateTextView.setBackgroundColor(defaultColor)
             selectedDateTextView.setBackgroundColor(defaultColor)
@@ -171,13 +169,17 @@ class AddOperationFragment : Fragment(), DatePickerDialog.OnDateSetListener {
     }
 
     override fun onDateSet(p0: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
-        val date = "$year-$month-$dayOfMonth"
+        val monthString = addZeroFrontDate(month + 1)
+        val dayOfMonthString = addZeroFrontDate(dayOfMonth)
+        val date = "$year-$monthString-$dayOfMonthString"
         dateTime = date
-        mBinding.selectedDateTextView.text = "${date.substringAfter('-')}\nselected"
+        binding.selectedDateTextView.text = "${date.substringAfter('-')}\nselected"
     }
 
+    private fun addZeroFrontDate(date: Int): String = if (date < 10) "0$date" else date.toString()
+
     private fun setupAddButton() {
-        mBinding.addOperationButton.setOnClickListener {
+        binding.addOperationButton.setOnClickListener {
             setupAttributes()
             val isCorrect =
                 correctValues.checkOperation(value, account, dateTime, balance, idCategory)
@@ -193,7 +195,7 @@ class AddOperationFragment : Fragment(), DatePickerDialog.OnDateSetListener {
     }
 
     private fun setupAttributes() {
-        val stringValue = mBinding.inputMoneyEditText.text.toString()
+        val stringValue = binding.inputMoneyEditText.text.toString()
         value = if (stringValue.isEmpty()) 0.0 else stringValue.toDouble()
     }
 
@@ -203,10 +205,5 @@ class AddOperationFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         } else {
             (activity as MainActivity).navController.navigate(R.id.action_addOperationFragment_to_operationsFragment)
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

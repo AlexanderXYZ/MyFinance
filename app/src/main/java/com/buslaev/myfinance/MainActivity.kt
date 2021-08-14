@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(mBinding.root)
         setupDependency()
         setupNavigation()
+        supportActionBar?.elevation = 0F
     }
 
     private fun setupDependency() {

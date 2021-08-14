@@ -11,9 +11,11 @@
         android:id="@+id/balance_navigationView"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        app:backgroundTint="@color/transparent"
-        app:elevation="0dp"
+        android:background="@drawable/background_navigation_view"
+        app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
+        app:itemTextAppearanceInactive="@style/BottomNavigationView"
         app:labelVisibilityMode="labeled"
+        app:itemTextColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -66,7 +68,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/main_graph_cl"
         tools:listitem="@layout/main_graph_item" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

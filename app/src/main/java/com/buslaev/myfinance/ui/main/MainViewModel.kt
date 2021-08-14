@@ -7,6 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.buslaev.myfinance.db.room.DaoHelper
 import com.buslaev.myfinance.entities.Operation
 import com.buslaev.myfinance.entities.OperationBySum
+import com.buslaev.myfinance.other.Constants.EXPENSES_BALANCE
+import com.buslaev.myfinance.other.Constants.INCOME_BALANCE
 import com.buslaev.myfinance.other.DateHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -19,11 +21,21 @@ class MainViewModel @Inject constructor(
 
     private val dateHelper = DateHelper()
 
-    private var _incomeOperations: MutableLiveData<List<OperationBySum>> = MutableLiveData()
-    val incomeOperations: LiveData<List<OperationBySum>> get() = _incomeOperations
+    //private var _incomeOperations: MutableLiveData<List<OperationBySum>> = MutableLiveData()
+    lateinit var incomeOperations: LiveData<List<OperationBySum>>
 
-    private var _expensesOperations: MutableLiveData<List<OperationBySum>> = MutableLiveData()
-    val expensesOperations: LiveData<List<OperationBySum>> get() = _expensesOperations
+    //private var _expensesOperations: MutableLiveData<List<OperationBySum>> = MutableLiveData()
+    lateinit var expensesOperations: LiveData<List<OperationBySum>>
+
+    init {
+        getDefaultOperation()
+    }
+
+    private fun getDefaultOperation() {
+        dateHelper.setDatesByToday()
+        getOperations(INCOME_BALANCE)
+        getOperations(EXPENSES_BALANCE)
+    }
 
     fun getIncomeOperations() {}
     fun getExpensesOperation() {}
@@ -57,7 +69,12 @@ class MainViewModel @Inject constructor(
         val startDate = dateHelper.getStartDate()
         val endDate = dateHelper.getEndDate()
         val values = repository.getOperationsByPeriod(startDate, endDate, balance)
-        _incomeOperations.postValue(values.value)
+        if (balance == INCOME_BALANCE) {
+            incomeOperations = values
+        } else {
+            expensesOperations = values
+        }
+
     }
 
     fun insertOperation(operation: Operation) {

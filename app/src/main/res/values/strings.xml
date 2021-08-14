@@ -37,8 +37,8 @@
     <string name="categories_title_menu">Categories</string>
 
     <!-- Menu Balance -->
-    <string name="income_title_menu">Income</string>
-    <string name="expenses_title_menu">Expenses</string>
+    <string name="income_title_menu">INCOME</string>
+    <string name="expenses_title_menu">EXPENSES</string>
 
     <!-- Menu Period graphs main -->
     <string name="day_title_menu">Day</string>

@@ -13,6 +13,8 @@
         android:layout_height="40dp"
         app:backgroundTint="@color/transparent"
         app:elevation="0dp"
+        app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
+        app:itemTextAppearanceInactive="@style/BottomNavigationView"
         app:labelVisibilityMode="labeled"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

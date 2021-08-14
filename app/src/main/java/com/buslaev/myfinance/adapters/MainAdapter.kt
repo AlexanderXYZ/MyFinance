@@ -1,5 +1,6 @@
 package com.buslaev.myfinance.adapters
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import com.buslaev.myfinance.R
 import com.buslaev.myfinance.entities.Operation
 import com.buslaev.myfinance.entities.OperationBySum
 import javax.inject.Inject
+import kotlin.math.roundToInt
 
 class MainAdapter @Inject constructor(
     private val glide: RequestManager
@@ -36,13 +38,26 @@ class MainAdapter @Inject constructor(
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
         val currentPos = mList[position]
         holder.apply {
-            //title.text = currentPos.title
-//            glide
-//                .load(currentPos.icon)
-//                .into(image)
-            percent.text = ((currentPos.value.div(mAllMoney)).times(100)).toString()
-            money.text = currentPos.value.toString()
+            glide
+                .load(currentPos.iconCategory)
+                .into(image)
+            val color = Color.parseColor(currentPos.backgroundColor)
+            image.background.setTint(color)
+
+            percent.text = "${(currentPos.value.div(mAllMoney)).times(100).roundToInt()} %"
+            money.text = changeMoney(currentPos.value)
         }
+    }
+
+    private fun changeMoney(value: Double): String {
+        var valueString = value.toString()
+        if (value >= 1_000) {
+            valueString = value.roundToInt().toString()
+            val firstPart = valueString.substring(0,valueString.length - 3)
+            val secondPart = valueString.substring(valueString.length - 3)
+            return "$firstPart $secondPart"
+        }
+        return valueString
     }
 
     override fun getItemCount(): Int {
