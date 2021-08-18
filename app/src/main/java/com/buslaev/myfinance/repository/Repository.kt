@@ -27,6 +27,9 @@ class Repository @Inject constructor(
     ): LiveData<List<OperationBySum>> =
         dao.getOperationsSortedByDate(format, balance)
 
+    override fun getAllOperationsSortedByDate(format: String): LiveData<List<OperationBySum>> =
+        dao.getAllOperationsSortedByDate(format)
+
     override suspend fun insertOperation(operation: Operation) {
         dao.insertOperation(operation)
     }

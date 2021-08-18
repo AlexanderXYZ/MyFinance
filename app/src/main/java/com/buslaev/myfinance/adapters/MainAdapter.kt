@@ -11,6 +11,7 @@ import com.bumptech.glide.RequestManager
 import com.buslaev.myfinance.R
 import com.buslaev.myfinance.entities.Operation
 import com.buslaev.myfinance.entities.OperationBySum
+import com.buslaev.myfinance.utilits.changeMoney
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
@@ -43,21 +44,10 @@ class MainAdapter @Inject constructor(
                 .into(image)
             val color = Color.parseColor(currentPos.backgroundColor)
             image.background.setTint(color)
-
+            title.text = currentPos.titleCategory
             percent.text = "${(currentPos.value.div(mAllMoney)).times(100).roundToInt()} %"
             money.text = changeMoney(currentPos.value)
         }
-    }
-
-    private fun changeMoney(value: Double): String {
-        var valueString = value.toString()
-        if (value >= 1_000) {
-            valueString = value.roundToInt().toString()
-            val firstPart = valueString.substring(0,valueString.length - 3)
-            val secondPart = valueString.substring(valueString.length - 3)
-            return "$firstPart $secondPart"
-        }
-        return valueString
     }
 
     override fun getItemCount(): Int {

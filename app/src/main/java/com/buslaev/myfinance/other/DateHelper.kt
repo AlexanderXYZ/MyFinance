@@ -18,11 +18,11 @@ class DateHelper {
     fun getEndDate(): String = endDate
 
     fun getDayFormat(): String {
-        return ""
+        return "%j"
     }
 
     fun getWeekFormat(): String {
-        return ""
+        return "%Y-%W"
     }
 
     fun getMonthFormat(): String {
@@ -30,7 +30,7 @@ class DateHelper {
     }
 
     fun getYearFormat(): String {
-        return ""
+        return "%Y"
     }
 
     fun setDatesByToday() {

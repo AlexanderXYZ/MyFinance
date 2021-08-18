@@ -1,7 +1,10 @@
 package com.buslaev.myfinance.ui.graphs
 
 
+import android.graphics.Color
+import android.graphics.Paint
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -15,16 +18,19 @@ import com.buslaev.myfinance.other.EnumHelper.BarDates.*
 import com.buslaev.myfinance.ui.BaseFragment
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.AxisBase
+import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
+import org.joda.time.LocalDate
 
-
+@AndroidEntryPoint
 class GraphsFragment : BaseFragment<FragmentGraphsBinding>(FragmentGraphsBinding::inflate) {
 
     private val mViewModel by viewModels<GraphsViewModel>()
@@ -32,8 +38,7 @@ class GraphsFragment : BaseFragment<FragmentGraphsBinding>(FragmentGraphsBinding
     private lateinit var mChartBalanceNavigation: BottomNavigationView
     private lateinit var mPeriodsNavigation: BottomNavigationView
 
-    private lateinit var mObserverIncome: Observer<List<OperationBySum>>
-    private lateinit var mObserverExpenses: Observer<List<OperationBySum>>
+    private lateinit var mObserver: Observer<List<OperationBySum>>
 
     private lateinit var mBarChart: BarChart
 
@@ -48,8 +53,7 @@ class GraphsFragment : BaseFragment<FragmentGraphsBinding>(FragmentGraphsBinding
         super.onViewCreated(view, savedInstanceState)
         setupChartBalanceNavigation()
         setupPeriodsNavigation()
-        setupObserverIncome()
-        setupBarChart()
+        setupObserver()
     }
 
     private fun setupChartBalanceNavigation() {
@@ -94,54 +98,14 @@ class GraphsFragment : BaseFragment<FragmentGraphsBinding>(FragmentGraphsBinding
     }
 
     private fun setupObserver() {
-        when (balance) {
-            GENERAL_BALANCE -> {
-                setupObserverIncome()
-                setupObserverExpenses()
-            }
-            INCOME_BALANCE -> {
-                setupObserverIncome()
-            }
-            EXPENSES_BALANCE -> {
-                setupObserverExpenses()
-            }
-        }
-    }
-
-    private fun setupObserverIncome() {
-        mObserverIncome = Observer { list ->
+        mObserver = Observer<List<OperationBySum>> { list ->
             val resultList = if (list.isNullOrEmpty()) {
                 emptyList()
             } else list
             setValues(resultList, balance)
             setupBarChart()
         }
-        when (balance) {
-            GENERAL_BALANCE -> {
-            }
-            INCOME_BALANCE -> {
-            }
-            EXPENSES_BALANCE -> {
-            }
-        }
-    }
-
-    private fun setupObserverExpenses() {
-        mObserverExpenses = Observer { list ->
-            val resultList = if (list.isNullOrEmpty()) {
-                emptyList()
-            } else list
-            setValues(resultList, balance)
-            setupBarChart()
-        }
-        when (balance) {
-            GENERAL_BALANCE -> {
-            }
-            INCOME_BALANCE -> {
-            }
-            EXPENSES_BALANCE -> {
-            }
-        }
+        mViewModel.operations.observe(viewLifecycleOwner, mObserver)
     }
 
     private fun setValues(list: List<OperationBySum>, balance: String) {
@@ -156,27 +120,63 @@ class GraphsFragment : BaseFragment<FragmentGraphsBinding>(FragmentGraphsBinding
                 setExpensesValues(list)
             }
         }
+        setXValues(list)
+    }
+
+    private fun setXValues(list: List<OperationBySum>) = runBlocking {
+        val xValues = async {
+            val resultList = mutableListOf<String>()
+            for (i in list) {
+                resultList.add(i.dateTime)
+            }
+            return@async resultList
+        }
+        this@GraphsFragment.xValues = xValues.await()
     }
 
     private fun setGeneralValues(list: List<OperationBySum>) = runBlocking {
-        val yValuesIncome = async { getYValues(list) }
+        val yValuesIncome = async { getYValues(list, INCOME_BALANCE) }
+        val yValuesExpenses = async { getYValues(list, EXPENSES_BALANCE) }
         this@GraphsFragment.yValuesIncome = yValuesIncome.await()
+        this@GraphsFragment.yValuesExpenses = yValuesExpenses.await()
     }
 
-    private fun setIncomeValues(list: List<OperationBySum>) {
+    private fun setIncomeValues(list: List<OperationBySum>) = runBlocking {
+        val yValuesIncome = async { getYValues(list, INCOME_BALANCE) }
+        this@GraphsFragment.yValuesIncome = yValuesIncome.await()
 
     }
 
-    private fun setExpensesValues(list: List<OperationBySum>) {
+    private fun setExpensesValues(list: List<OperationBySum>) = runBlocking {
+        val yValuesIncome = async { getYValues(list, INCOME_BALANCE) }
+        this@GraphsFragment.yValuesIncome = yValuesIncome.await()
 
     }
 
-    private fun getYValues(list: List<OperationBySum>): ArrayList<BarEntry> {
+    private fun getYValues(
+        list: List<OperationBySum>,
+        expectedYValues: String
+    ): ArrayList<BarEntry> {
+        val sortedList = if (balance == GENERAL_BALANCE) {
+            list.filter { it.balance == expectedYValues }
+        } else list
+
+        var localDate = LocalDate()
         val result = ArrayList<BarEntry>()
         var xFloat = 1F
-        for (i in list) {
+        for (i in sortedList) {
+            val emptyValues = ArrayList<BarEntry>()
+            while (localDate.toString() != i.dateTime) {
+                emptyValues.add(BarEntry(xFloat, 0F))
+                xFloat += 1F
+                localDate = localDate.minusDays(1)
+            }
+            if (emptyValues.isNotEmpty()) {
+                result.addAll(emptyValues)
+            }
+            localDate = localDate.minusDays(1)
             val entry = BarEntry(xFloat, i.value.toFloat())
-            xFloat++
+            xFloat += 1F
             result.add(entry)
         }
         return result
@@ -188,43 +188,88 @@ class GraphsFragment : BaseFragment<FragmentGraphsBinding>(FragmentGraphsBinding
         mBarChart.apply {
             setDrawBarShadow(false)
             setDrawValueAboveBar(true)
-            setMaxVisibleValueCount(50)
+            //setMaxVisibleValueCount(50)
             setPinchZoom(false)
             setDrawGridBackground(false)
+//            description.textAlign = Paint.Align.CENTER
+//            description.text = xValues[0].substring(0, 3)
+            description.isEnabled = false
+            legend.form = Legend.LegendForm.CIRCLE
+            legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
         }
 
+        val xAxis = mBarChart.xAxis
+        xAxis.apply {
+            valueFormatter = MyXAxisValuesFormatter()
+            position = XAxis.XAxisPosition.BOTTOM
+            granularity = 1F
+            setCenterAxisLabels(true)
+            axisMinimum = 1F
+        }
+        mBarChart.axisLeft.isEnabled = false
+        mBarChart.axisRight.isEnabled = false
+
+        when (balance) {
+            GENERAL_BALANCE -> {
+                setupDataIncomeAndExpenses()
+            }
+            INCOME_BALANCE -> {
+                setupDataIncome()
+            }
+            EXPENSES_BALANCE -> {
+                setupDataExpenses()
+            }
+        }
+
+
+        mBarChart.invalidate()
+    }
+
+    class MyXAxisValuesFormatter : ValueFormatter() {
+        private val localDate = LocalDate()
+        private var day = localDate.minusDays(1)
+
+        override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+            day = day.plusDays(1)
+            Log.d("xLabel", day.toString())
+            return day.toString().substringAfter('-')
+
+            // начинает с 14,а не с 15 числа
+            // + нужно сделать группировку по balance
+        }
+    }
+
+    private fun setupDataIncomeAndExpenses() {
         val dataSetIncome = BarDataSet(yValuesIncome, "Income")
+        dataSetIncome.color = Color.GREEN
         val dataSetExpenses = BarDataSet(yValuesExpenses, "Expenses")
+        dataSetExpenses.color = Color.BLUE
 
         val data = BarData(dataSetIncome, dataSetExpenses)
 
-        val groupSpace = 0.1F
-        val barSpace = 0.02F
-        val barWidth = 0.42F
+        val groupSpace = 0.4F
+        val barSpace = 0F
+        val barWidth = 0.3F
 
         mBarChart.data = data
 
         data.barWidth = barWidth
 
         mBarChart.apply {
+            setScaleEnabled(false)
             groupBars(1F, groupSpace, barSpace)
         }
-
-
-        val xAxis = mBarChart.xAxis
-        xAxis.apply {
-            valueFormatter = MyXAxisValuesFormatter(xValues)
-            position = XAxis.XAxisPosition.BOTTOM
-            granularity = 1F
-            setCenterAxisLabels(true)
-            axisMinimum = 1F
-        }
-        mBarChart.invalidate()
     }
 
-    class MyXAxisValuesFormatter(private val list: List<String>) : ValueFormatter() {
-        override fun getFormattedValue(value: Float, axis: AxisBase?): String {
-            return list[(value.toInt())]
-        }
+    private fun setupDataIncome() {
+        val dataSetIncome = BarDataSet(yValuesIncome, "Income")
+        val data = BarData(dataSetIncome)
+        mBarChart.data = data
+    }
+
+    private fun setupDataExpenses() {
+        val dataSetExpenses = BarDataSet(yValuesExpenses, "Expenses")
+        val data = BarData(dataSetExpenses)
+        mBarChart.data = data
     }
 }

@@ -12,6 +12,7 @@ import com.buslaev.myfinance.db.room.FinanceDao
 import com.buslaev.myfinance.db.room.FinanceDatabase
 import com.buslaev.myfinance.other.Constants.DATABASE_NAME
 import com.buslaev.myfinance.repository.Repository
+import com.buslaev.myfinance.sharedPreferences.AccountSharedPreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -56,4 +57,9 @@ object AppModule {
     @Singleton
     fun provideIconsViewPagerAdapter(glide: RequestManager): IconsAdapter =
         IconsAdapter(glide)
+
+    @Provides
+    @Singleton
+    fun provideAccountSharedPreferences(@ApplicationContext context: Context) =
+        AccountSharedPreferences(context)
 }

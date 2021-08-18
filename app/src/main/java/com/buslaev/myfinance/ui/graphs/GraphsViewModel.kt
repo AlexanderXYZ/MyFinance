@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.buslaev.myfinance.db.room.DaoHelper
 import com.buslaev.myfinance.entities.OperationBySum
+import com.buslaev.myfinance.other.Constants.GENERAL_BALANCE
 import com.buslaev.myfinance.other.Constants.INCOME_BALANCE
 import com.buslaev.myfinance.other.DateHelper
 import com.buslaev.myfinance.other.EnumHelper.BarDates
@@ -21,7 +22,7 @@ class GraphsViewModel @Inject constructor(
     lateinit var operations: LiveData<List<OperationBySum>>
 
     init {
-        getOperations(ON_DAYS, INCOME_BALANCE)
+        getOperations(ON_DAYS, GENERAL_BALANCE)
     }
 
     fun getOperations(dates: BarDates, balance: String) {
@@ -39,6 +40,11 @@ class GraphsViewModel @Inject constructor(
                 dateHelper.getYearFormat()
             }
         }
-        operations = repository.getOperationsSortedByDate(format, balance)
+        operations = if (balance == GENERAL_BALANCE){
+            repository.getAllOperationsSortedByDate(format)
+        }else {
+            repository.getOperationsSortedByDate(format, balance)
+        }
+
     }
 }
