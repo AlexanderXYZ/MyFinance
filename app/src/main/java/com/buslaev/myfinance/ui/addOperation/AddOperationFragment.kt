@@ -186,6 +186,10 @@ class AddOperationFragment :
             if (isCorrect) {
                 val operation = correctValues.getCorrectOperation()
                 mViewModel.addOperation(operation)
+                when (balance) {
+                    INCOME_BALANCE -> mViewModel.changeValueOfAccountIncome(value, account)
+                    EXPENSES_BALANCE -> mViewModel.changeValueOfAccountExpenses(value, account)
+                }
                 navigateBack()
             } else {
                 Toast.makeText(requireContext(), "Please check all attributes", Toast.LENGTH_SHORT)

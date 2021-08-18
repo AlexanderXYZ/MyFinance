@@ -3,6 +3,7 @@ package com.buslaev.myfinance.ui.main
 import android.graphics.Color
 import android.os.Bundle
 import android.view.*
+import android.widget.TextView
 import androidx.appcompat.app.ActionBar
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -12,6 +13,7 @@ import com.buslaev.myfinance.MainActivity
 import com.buslaev.myfinance.R
 import com.buslaev.myfinance.adapters.MainAdapter
 import com.buslaev.myfinance.databinding.FragmentMainBinding
+import com.buslaev.myfinance.entities.Operation
 import com.buslaev.myfinance.entities.OperationBySum
 import com.buslaev.myfinance.other.Constants.EXPENSES_BALANCE
 import com.buslaev.myfinance.other.Constants.FRAGMENT_MAIN
@@ -42,6 +44,7 @@ class MainFragment :
     lateinit var mAdapter: MainAdapter
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mObserver: Observer<List<OperationBySum>>
+    private lateinit var mObserverTitle: Observer<String>
 
     private lateinit var mBalanceNavigation: BottomNavigationView
     private lateinit var mPeriodsNavigation: BottomNavigationView
@@ -55,14 +58,19 @@ class MainFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as MainActivity).supportActionBar?.apply {
-            displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
-            setCustomView(R.layout.action_bar_layout)
-        }
+        (activity as MainActivity).titleInCenter()
         setupBalanceNavigation()
         setupPeriodsNavigation()
         setupRecyclerView()
         setupObserver(balance)
+        setupObserverTitle()
+    }
+
+    private fun setupObserverTitle() {
+        mObserverTitle = Observer {
+            (activity as MainActivity).setTitleInCenter(it)
+        }
+        mViewModel.title.observe(viewLifecycleOwner, mObserverTitle)
     }
 
     override fun onStart() {

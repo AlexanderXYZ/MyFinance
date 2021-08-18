@@ -10,13 +10,15 @@ import com.buslaev.myfinance.entities.OperationBySum
 import com.buslaev.myfinance.other.Constants.EXPENSES_BALANCE
 import com.buslaev.myfinance.other.Constants.INCOME_BALANCE
 import com.buslaev.myfinance.other.DateHelper
+import com.buslaev.myfinance.sharedPreferences.AccountSharedPreferences
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val repository: DaoHelper
+    private val repository: DaoHelper,
+    private val accountSharedPreferences: AccountSharedPreferences
 ) : ViewModel() {
 
     private val dateHelper = DateHelper()
@@ -27,8 +29,16 @@ class MainViewModel @Inject constructor(
     //private var _expensesOperations: MutableLiveData<List<OperationBySum>> = MutableLiveData()
     lateinit var expensesOperations: LiveData<List<OperationBySum>>
 
+    private var _title: MutableLiveData<String> = MutableLiveData()
+    val title: LiveData<String> get() = _title
+
     init {
+        getTitleValue()
         getDefaultOperation()
+    }
+
+    private fun getTitleValue(account: String = "main") {
+        _title.value = accountSharedPreferences.getValue(account)
     }
 
     private fun getDefaultOperation() {
