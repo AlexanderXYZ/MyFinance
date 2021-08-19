@@ -21,6 +21,8 @@ import com.buslaev.myfinance.other.Constants.INCOME_BALANCE
 import com.buslaev.myfinance.other.Constants.MAIN_BACKGROUND_WHIT
 import com.buslaev.myfinance.other.Constants.PARENT_FRAGMENT_KEY
 import com.buslaev.myfinance.ui.BaseFragment
+import com.buslaev.myfinance.utilits.removeItemsUnderline
+import com.buslaev.myfinance.utilits.underlineMenuItem
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
@@ -64,6 +66,20 @@ class MainFragment :
         setupRecyclerView()
         setupObserver(balance)
         setupObserverTitle()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.main_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.main_account_menu -> {
+
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun setupObserverTitle() {

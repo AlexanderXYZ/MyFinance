@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_mainFragment_to_addOperationFragment"
             app:destination="@id/addOperationFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_accountFragment"
+            app:destination="@id/accountFragment" />
     </fragment>
     <fragment
         android:id="@+id/categoriesFragment"
@@ -124,5 +127,50 @@
         <action
             android:id="@+id/action_addCategoryFragment_to_categoriesFragment"
             app:destination="@id/categoriesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/accountFragment"
+        android:name="com.buslaev.myfinance.ui.account.AccountFragment"
+        android:label="fragment_account"
+        tools:layout="@layout/fragment_account" >
+        <action
+            android:id="@+id/action_accountFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_accountFragment_to_createAccountFragment"
+            app:destination="@id/createAccountFragment" />
+        <action
+            android:id="@+id/action_accountFragment_to_createTransferFragment"
+            app:destination="@id/createTransferFragment" />
+        <action
+            android:id="@+id/action_accountFragment_to_viewHistoryTransfersFragment"
+            app:destination="@id/viewHistoryTransfersFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createAccountFragment"
+        android:name="com.buslaev.myfinance.ui.account.createAccount.CreateAccountFragment"
+        android:label="fragment_create_account"
+        tools:layout="@layout/fragment_create_account" >
+        <action
+            android:id="@+id/action_createAccountFragment_to_accountFragment"
+            app:destination="@id/accountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewHistoryTransfersFragment"
+        android:name="com.buslaev.myfinance.ui.account.viewHistoryTransfers.ViewHistoryTransfersFragment"
+        android:label="fragment_view_history_transfers"
+        tools:layout="@layout/fragment_view_history_transfers" >
+        <action
+            android:id="@+id/action_viewHistoryTransfersFragment_to_accountFragment"
+            app:destination="@id/accountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createTransferFragment"
+        android:name="com.buslaev.myfinance.ui.account.createTransfer.CreateTransferFragment"
+        android:label="fragment_create_transfer"
+        tools:layout="@layout/fragment_create_transfer" >
+        <action
+            android:id="@+id/action_createTransferFragment_to_accountFragment"
+            app:destination="@id/accountFragment" />
     </fragment>
 </navigation>

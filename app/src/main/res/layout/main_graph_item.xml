@@ -39,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="100dp"
-            android:text="83%"
+            android:text=""
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -62,7 +62,7 @@
                 android:text="10 006" />
 
             <TextView
-                android:id="@+id/valute_item"
+                android:id="@+id/currency_item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="rub" />

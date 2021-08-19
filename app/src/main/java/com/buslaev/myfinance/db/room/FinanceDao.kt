@@ -2,6 +2,7 @@ package com.buslaev.myfinance.db.room
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.buslaev.myfinance.entities.Account
 import com.buslaev.myfinance.entities.Categories
 import com.buslaev.myfinance.entities.Operation
 import com.buslaev.myfinance.entities.OperationBySum
@@ -69,5 +70,17 @@ interface FinanceDao {
     @Query("SELECT SUM(o.value) as value,o.account,o.dateTime,o.balance,c.title as titleCategory,c.icon as iconCategory,c.backgroundColor FROM operations as o INNER JOIN categories as c ON o.idCategory=c.idCategory GROUP BY strftime(:format,o.dateTime) ORDER BY date(o.dateTime) DESC")
     fun getAllOperationsSortedByDate(
         format: String
-    ):LiveData<List<OperationBySum>>
+    ): LiveData<List<OperationBySum>>
+
+    /*
+        Accounts
+     */
+    @Query("SELECT * FROM accounts")
+    fun getAccounts(): LiveData<List<Account>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAccount(account: Account)
+
+    @Delete
+    suspend fun deleteAccount(account: Account)
 }

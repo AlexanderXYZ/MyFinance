@@ -3,6 +3,7 @@ package com.buslaev.myfinance.repository
 import androidx.lifecycle.LiveData
 import com.buslaev.myfinance.db.room.DaoHelper
 import com.buslaev.myfinance.db.room.FinanceDao
+import com.buslaev.myfinance.entities.Account
 import com.buslaev.myfinance.entities.Categories
 import com.buslaev.myfinance.entities.Operation
 import com.buslaev.myfinance.entities.OperationBySum
@@ -46,4 +47,13 @@ class Repository @Inject constructor(
         dao.deleteCategory(category)
     }
 
+    override fun getAccounts(): LiveData<List<Account>> = dao.getAccounts()
+
+    override suspend fun insertAccount(account: Account) {
+        dao.insertAccount(account)
+    }
+
+    override suspend fun deleteAccount(account: Account) {
+        dao.deleteAccount(account)
+    }
 }

@@ -29,6 +29,8 @@ import com.buslaev.myfinance.other.Constants.INCOME_BALANCE
 import com.buslaev.myfinance.other.Constants.PARENT_FRAGMENT_KEY
 import com.buslaev.myfinance.ui.BaseFragment
 import com.buslaev.myfinance.utilits.CorrectValues
+import com.buslaev.myfinance.utilits.removeItemsUnderline
+import com.buslaev.myfinance.utilits.underlineMenuItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import org.joda.time.LocalDate

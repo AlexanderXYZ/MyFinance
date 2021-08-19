@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var title: TextView
     lateinit var account: LinearLayout
+    lateinit var accountButton: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,13 +101,21 @@ class MainActivity : AppCompatActivity() {
             displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
             val view = layoutInflater.inflate(R.layout.action_bar_layout, null)
             val params = ActionBar.LayoutParams(
-                ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT,
+                ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT,
                 Gravity.CENTER
             )
             this@MainActivity.title = view.findViewById(R.id.title_textView_actionBar)
             this@MainActivity.account = view.findViewById(R.id.account_ll_actionBar)
+            this@MainActivity.accountButton = view.findViewById(R.id.account_button_actionBar)
             setupAccountClick()
             setCustomView(view, params)
+            setupAccountButton()
+        }
+    }
+
+    private fun setupAccountButton() {
+        accountButton.setOnClickListener {
+            navController.navigate(R.id.action_mainFragment_to_accountFragment)
         }
     }
 

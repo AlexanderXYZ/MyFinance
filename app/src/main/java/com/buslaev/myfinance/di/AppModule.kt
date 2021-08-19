@@ -4,12 +4,14 @@ import android.content.Context
 import androidx.room.Room
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
+import com.buslaev.myfinance.adapters.AccountsAdapter
 import com.buslaev.myfinance.adapters.CategoriesAdapter
 import com.buslaev.myfinance.adapters.IconsAdapter
 import com.buslaev.myfinance.adapters.MainAdapter
 import com.buslaev.myfinance.db.room.DaoHelper
 import com.buslaev.myfinance.db.room.FinanceDao
 import com.buslaev.myfinance.db.room.FinanceDatabase
+import com.buslaev.myfinance.db.room.MIGRATE_3_4
 import com.buslaev.myfinance.other.Constants.DATABASE_NAME
 import com.buslaev.myfinance.repository.Repository
 import com.buslaev.myfinance.sharedPreferences.AccountSharedPreferences
@@ -28,7 +30,9 @@ object AppModule {
     @Singleton
     fun provideFinanceDatabase(
         @ApplicationContext context: Context
-    ) = Room.databaseBuilder(context, FinanceDatabase::class.java, DATABASE_NAME).build()
+    ) = Room.databaseBuilder(context, FinanceDatabase::class.java, DATABASE_NAME)
+        .addMigrations(MIGRATE_3_4)
+        .build()
 
     @Provides
     @Singleton
@@ -57,6 +61,11 @@ object AppModule {
     @Singleton
     fun provideIconsViewPagerAdapter(glide: RequestManager): IconsAdapter =
         IconsAdapter(glide)
+
+    @Provides
+    @Singleton
+    fun provideAccountsAdapter(glide: RequestManager): AccountsAdapter =
+        AccountsAdapter(glide)
 
     @Provides
     @Singleton
