@@ -37,7 +37,7 @@ class AccountsAdapter @Inject constructor(
         holder.apply {
             title.text = currentPos.title
             glide
-                .load(currentPos)
+                .load(currentPos.icon)
                 .into(image)
             val color = Color.parseColor(currentPos.backgroundColor)
             image.background.setTint(color)

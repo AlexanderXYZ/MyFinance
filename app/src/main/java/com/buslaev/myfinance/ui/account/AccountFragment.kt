@@ -49,7 +49,10 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(FragmentAccountBind
 
     private fun setupObserver() {
         mObserver = Observer { list ->
-            mAdapter.setList(list)
+            val result = if (list.isNullOrEmpty()) {
+                emptyList()
+            } else list
+            mAdapter.setList(result)
         }
         mViewModel.accounts.observe(viewLifecycleOwner, mObserver)
     }
